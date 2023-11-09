@@ -1,0 +1,9 @@
+[Mapgen]
+#	Size of the baseplate, in amount of nodes/studs outwards from the center.
+brickbuild_baseplate_size (Baseplate size) int 256 0 30000
+
+#	Depth of the baseplate, in amount of nodes/studs.
+brickbuild_baseplate_depth (Baseplate depth) int 20 0 30000
+
+#	Change the part that the baseplate uses to generate.
+brickbuild_baseplate_part (Baseplate Part) string brickbuild:medium_stone_grey

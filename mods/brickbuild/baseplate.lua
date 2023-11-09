@@ -1,12 +1,11 @@
 
-if minetest.get_mapgen_setting('mg_name') == "singlenode" then
+if minetest.get_mapgen_setting('mg_name') ~= "singlenode" then
+	return
+end
 
-local c_base
-minetest.register_on_mods_loaded(function()
-	c_base = minetest.get_content_id("brickbuild:medium_stone_grey")
-end)
-local size = 256
-local depth = 20
+local c_base = minetest.settings:get('brickbuild_baseplate_part') or "brickbuild:medium_stone_grey"
+local size = tonumber(minetest.settings:get('brickbuild_baseplate_size')) or 256
+local depth = tonumber(minetest.settings:get('brickbuild_baseplate_depth')) or 20
 
 local data = {}
 
@@ -35,5 +34,3 @@ minetest.register_on_generated(function(minp, maxp, blockseed)
 		vm:write_to_map()
 	end
 end)
-
-end

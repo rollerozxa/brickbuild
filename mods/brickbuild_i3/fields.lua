@@ -1,19 +1,14 @@
-local set_fs = i3.set_fs
 
-local fmt = i3.get("fmt")
 local reset_data = i3.get("reset_data")
 local search, sort_by_category = i3.get("search", "sort_by_category")
-local valid_item, get_stack, clean_name, compressible = i3.get("valid_item", "get_stack", "clean_name", "compressible")
+local valid_item, compressible = i3.get("valid_item", "compressible")
 
-local function inv_fields(player, data, fields)
-	local sb_inv = fields.scrbar_inv
-
-	if sb_inv and string.sub(sb_inv, 1, 3) == "CHG" then
-		data.scrbar_inv = tonumber(string.match(sb_inv, "%d+"))
-		return
+local function clean_name(item)
+	if string.sub(item, 1, 1) == ":" or string.sub(item, 1, 1) == " " or string.sub(item, 1, 1) == "_" then
+		item = string.sub(item, 2)
 	end
 
-	return set_fs(player)
+	return item
 end
 
 local function select_item(player, data, fields)
@@ -54,7 +49,7 @@ local function select_item(player, data, fields)
 
 			if i3.compress_groups[item] then
 				local items = table.copy(i3.compress_groups[item])
-				table.insert(items, fmt("_%s", item))
+				table.insert(items, string.format("_%s", item))
 
 				table.sort(items, function(a, b)
 					if a:sub(1, 1) == "_" then
@@ -86,12 +81,13 @@ local function select_item(player, data, fields)
 
 		if minetest.is_creative_enabled(data.player_name) then
 			local stack = ItemStack(item)
-			local stackmax = stack:get_stack_max()
-			      stack = fmt("%s %s", item, stackmax)
+			stack = string.format("%s %s", item, stack:get_stack_max())
 
-			return get_stack(player, stack)
+			local inv = player:get_inventory()
+			if inv:room_for_item("main", stack) then
+				inv:add_item("main", stack)
+			end
 		end
-
 	end
 end
 
@@ -105,7 +101,7 @@ local function rcp_fields(player, data, fields)
 	elseif fields.key_enter_field == "filter" or fields.search then
 		if fields.filter == "" then
 			reset_data(data)
-			return set_fs(player)
+			return i3.set_fs(player)
 		end
 
 		local str = string.lower(fields.filter)
@@ -135,40 +131,14 @@ local function rcp_fields(player, data, fields)
 end
 
 minetest.register_on_player_receive_fields(function(player, formname, fields)
-	local name = player:get_player_name()
-
-	if formname == "i3_outdated" then
-		return false, minetest.kick_player(name,
-			"Come back when your Minetest client is up-to-date (www.minetest.net).")
-	elseif formname ~= "" then
+	if formname ~= "" or fields.pagenum or fields.no_item then
 		return false
 	end
 
-	-- No-op buttons
-	if fields.player_name or fields.pagenum or fields.no_item then
-		return false
-	end
-
-	local data = i3.data[name]
+	local data = i3.data[player:get_player_name()]
 	if not data then return end
-
-	for f in pairs(fields) do
-		if string.sub(f, 1, 4) == "tab_" then
-			local tabname = string.sub(f, 5)
-			i3.set_tab(player, tabname)
-			break
-		end
-	end
 
 	rcp_fields(player, data, fields)
 
-	local tab = i3.tabs[data.tab]
-
-	if tab and tab.fields then
-		return true, tab.fields(player, data, fields)
-	end
-
-	return true, set_fs(player)
+	return true, i3.set_fs(player)
 end)
-
-return inv_fields

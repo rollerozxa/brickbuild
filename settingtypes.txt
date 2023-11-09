@@ -6,4 +6,4 @@ brickbuild_baseplate_size (Baseplate size) int 256 0 30000
 brickbuild_baseplate_depth (Baseplate depth) int 20 0 30000
 
 #	Change the part that the baseplate uses to generate.
-brickbuild_baseplate_part (Baseplate Part) string brickbuild:medium_stone_grey
+brickbuild_baseplate_part (Baseplate Part) string brickbuild:green

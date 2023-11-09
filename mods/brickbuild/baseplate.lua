@@ -3,7 +3,7 @@ if minetest.get_mapgen_setting('mg_name') ~= "singlenode" then
 	return
 end
 
-local c_base = minetest.settings:get('brickbuild_baseplate_part') or "brickbuild:medium_stone_grey"
+local c_base = minetest.settings:get('brickbuild_baseplate_part') or "brickbuild:green"
 local size = tonumber(minetest.settings:get('brickbuild_baseplate_size')) or 256
 local depth = tonumber(minetest.settings:get('brickbuild_baseplate_depth')) or 20
 

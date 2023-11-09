@@ -33,9 +33,12 @@ minetest.register_on_joinplayer(function(player)
 		saturation = 1
 	}
 
-	player:get_inventory():set_width("main", 10)
-	player:get_inventory():set_size("main", 30)
-	player:hud_set_hotbar_itemcount(10)
+	player:get_inventory():set_width("main", 9)
+	player:get_inventory():set_size("main", 9*3)
+	player:get_inventory():set_size("craft", 0)
+	player:get_inventory():set_size("craftpreview", 0)
+	player:get_inventory():set_size("craftresult", 0)
+	player:hud_set_hotbar_itemcount(9)
 end)
 
 minetest.register_on_player_hpchange(function(player, hp_change, reason)

@@ -3,10 +3,8 @@ local part_buffer = {
 	replace = "",
 	by = {}
 }
-local function register_part(name, def)
-	def.groups = def.groups or { oddly_breakable_by_hand = 3 }
-	minetest.register_node(":brickbuild:"..name, def)
 
+local function push_part_buffer(name)
 	if part_buffer.replace == "" then
 		part_buffer.replace = name
 	else
@@ -23,6 +21,13 @@ local function pop_part_buffer()
 	return parts
 end
 
+local function register_part(name, def)
+	def.groups = def.groups or { oddly_breakable_by_hand = 3 }
+	minetest.register_node(":brickbuild:"..name, def)
+
+	push_part_buffer(name)
+end
+
 colours = {
 	{1,   "F4F4F4", "White"},
 	{5,   "CCB98D", "Tan"},
@@ -30,7 +35,7 @@ colours = {
 	{21,  "B40000", "Red"},
 	{23,  "1E5AA8", "Blue"},
 	{24,  "FAC80A", "Yellow"},
-	{26,  "0a0a0a", "Black"},
+	{26,  "0A0A0A", "Black"},
 	{28,  "00852B", "Green"},
 	{37,  "58AB41", "Bright Green"},
 	{38,  "91501C", "Dark Orange"},
@@ -209,4 +214,8 @@ for _,variant in ipairs{"a","b","c","d"} do
 		paramtype = "light",
 		sunlight_propagates = true,
 	})
+
+	push_part_buffer('brickbuild:glass_'..variant)
 end
+
+i3.compress('brickbuild:glass_a', pop_part_buffer())

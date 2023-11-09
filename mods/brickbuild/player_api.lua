@@ -17,10 +17,10 @@ minetest.register_on_joinplayer(function(player)
 		mesh = "character.b3d",
 		textures = {"character.png"},
 		visual = "mesh",
-		visual_size = {x = 2.5, y = 2.5},
-		collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.7, 0.3},
+		visual_size = {x = 2.25, y = 2.25},
+		collisionbox = {-0.7, 0.0, -0.3, 0.3, 3.6, 0.7},
 		stepheight = 2.5,
-		eye_height = 3.75,
+		eye_height = 3.25,
 	}
 
 	player:set_local_animation(
@@ -28,24 +28,16 @@ minetest.register_on_joinplayer(function(player)
 		animations.walk,
 		animations.mine,
 		animations.walk_mine,
-		30)
+		35)
 
 	player:override_day_night_ratio(1)
 
 	player:set_physics_override{
 		speed = 3,
-		jump = 4,
-		gravity = 3
+		jump = 2,
+		gravity = 2
 	}
 end)
-
-local function set_animation(player, anim_name, speed)
-	local name = player:get_player_name()
-	if player_anim[name] == anim_name then return end
-
-	player_anim[name] = anim_name
-	player:set_animation(animations[anim_name], speed)
-end
 
 minetest.register_globalstep(function()
 	for _, player in ipairs(minetest.get_connected_players()) do
@@ -72,6 +64,9 @@ minetest.register_globalstep(function()
 			anim_name = "stand"
 		end
 
-		set_animation(player, anim_name, anim_speed)
+		if player_anim[name] == anim_name then return end
+
+		player_anim[name] = anim_name
+		player:set_animation(animations[anim_name], anim_speed)
 	end
 end)

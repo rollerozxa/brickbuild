@@ -1,8 +1,4 @@
 
-minetest.register_alias('mapgen_stone', 'oblx_parts:red')
-minetest.register_alias('mapgen_water_source', 'air')
-minetest.register_alias('mapgen_river_water_source', 'air')
-
 minetest.register_item(':', {
 	type = 'none',
 	wield_image = 'brickbuild_hand.png',
@@ -56,3 +52,5 @@ include('player')
 include('player_api')
 
 include('baseplate')
+
+include("mapgen")

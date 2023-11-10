@@ -11,11 +11,13 @@ minetest.register_on_joinplayer(function(player)
 			'oblx_skybox_north.png',
 			'oblx_skybox_south.png',
 		},
-		clouds = false
+		clouds = false,
+		body_orbit_tilt = -20,
 	}
 
 	player:set_sun{
-		visible = false,
+		texture = "blank.png",
+		visible = true,
 		sunrise_visible = false
 	}
 
@@ -27,9 +29,10 @@ minetest.register_on_joinplayer(function(player)
 		visible = false
 	}
 
-	player:override_day_night_ratio(0.8)
+	player:override_day_night_ratio(0.65)
 
 	player:set_lighting{
+		shadows = { intensity = 0.3 },
 		saturation = 1
 	}
 

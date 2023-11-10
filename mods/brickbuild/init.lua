@@ -3,16 +3,8 @@ minetest.register_item(':', {
 	type = 'none',
 	wield_image = 'brickbuild_hand.png',
 	wield_scale = {x = 0.5, y = 0.85, z = 4},
-	range = 25,
-	tool_capabilities = {
-		max_drop_level = 0,
-		groupcaps = {
-			oddly_breakable_by_hand = {
-				times = {[3] = 0},
-				uses = 0,
-			},
-		}
-	},
+	range = 0,
+
 	on_place = function(itemstack, placer, pointed_thing)
 		if minetest.is_creative_enabled(placer:get_player_name()) then
 			local pointed_node = minetest.get_node(pointed_thing.under)
@@ -20,6 +12,21 @@ minetest.register_item(':', {
 		end
 	end
 })
+
+if minetest.is_creative_enabled("") then
+	minetest.override_item('', {
+		range = 25,
+		tool_capabilities = {
+			max_drop_level = 0,
+			groupcaps = {
+				oddly_breakable_by_hand = {
+					times = {[3] = 0},
+					uses = 0,
+				},
+			}
+		},
+	})
+end
 
 minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack, pointed_thing)
 	-- Unlimited blocks in creative mode

@@ -84,8 +84,8 @@ local function select_item(player, data, fields)
 			stack = string.format("%s %s", item, stack:get_stack_max())
 
 			local inv = player:get_inventory()
-			if inv:room_for_item("main", stack) then
-				inv:add_item("main", stack)
+			if not inv:contains_item("main", item) then
+				inv:add_item("main", item)
 			end
 		end
 	end

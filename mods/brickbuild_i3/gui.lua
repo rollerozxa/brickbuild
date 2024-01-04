@@ -12,13 +12,13 @@ local PNG = {
 	cancel_hover = "i3_cancel.png^\\[brighten",
 	search_hover = "i3_search.png^\\[brighten",
 	trash_hover = "i3_trash.png^\\[brighten^\\[colorize:#f00:100",
-	prev_hover = "i3_next_hover.png^\\[transformFX",
-	next_hover = "i3_next_hover.png",
+	prev_hover = "i3_next.png^\\[multiply:#ffd800^\\[transformFX",
+	next_hover = "i3_next.png^\\[multiply:#ffd800",
 }
 
 local styles = string.format([[
 	style_type[field;border=false;bgcolor=transparent]
-	style_type[label,field;font_size=16]
+	style_type[label,field;font_size=18]
 	style_type[button;border=false;content_offset=0]
 	style_type[image_button,item_image_button,dropdown;border=false]
 	style_type[item_image_button;bgimg_hovered=%s]
@@ -91,8 +91,10 @@ local function get_inventory_fs(player, data, fs)
 		hotbar_len, (4*9) / hotbar_len, hotbar_len),
 	   "style_type[list;size=1;spacing=0.15]")
 
-	--fs("list[detached:i3_trash;main;4.45,0.75;1,1;]")
-	--fs("image", 4.45, 1.25 - 0.5, 1, 1, PNG.trash)
+	fs("style_type[list,image,box;noclip=true]")
+	fs("box[10.23,5.75;1.2,1.2;#23252bff]")
+	fs("list[detached:i3_trash;main;10.33,5.85;1,1;]")
+	fs("image", 10.33, 5.85, 1, 1, PNG.trash)
 end
 
 local function hide_items(player, data)
@@ -124,13 +126,13 @@ local function get_items_fs(fs, data, player, full_height)
 	local ipp = rows * lines
 	local size = 0.85
 
-	fs(fmt("box[%f,0.2;4.05,0.6;#bababa25]", 0.3),
+	fs(fmt("box[%f,0.2;6.05,0.6;#bababa25]", 0.3),
 	   "set_focus[filter]",
-	   fmt("field[%f,0.2;2.95,0.6;filter;;%s]", 0.35, minetest.formspec_escape(data.filter)),
+	   fmt("field[%f,0.2;4.95,0.6;filter;;%s]", 0.35, minetest.formspec_escape(data.filter)),
 	   "field_close_on_enter[filter;false]")
 
-	fs("image_button", 3.35, 0.35, 0.3,  0.3,  "", "cancel", "")
-	fs("image_button", 3.85, 0.32, 0.35, 0.35, "", "search", "")
+	fs("image_button", 5.35, 0.35, 0.3,  0.3,  "", "cancel", "")
+	fs("image_button", 5.85, 0.32, 0.35, 0.35, "", "search", "")
 	fs("image_button", 7.27, 0.3,  0.35, 0.35, "", "prev_page", "")
 	fs("image_button", 9.45, 0.3,  0.35, 0.35, "", "next_page", "")
 

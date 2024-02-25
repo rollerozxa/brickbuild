@@ -80,9 +80,6 @@ local function select_item(player, data, fields)
 		if not minetest.registered_items[item] then return end
 
 		if minetest.is_creative_enabled(data.player_name) then
-			local stack = ItemStack(item)
-			stack = string.format("%s %s", item, stack:get_stack_max())
-
 			local inv = player:get_inventory()
 			if not inv:contains_item("main", item) then
 				inv:add_item("main", item)

@@ -36,6 +36,10 @@ minetest.register_on_joinplayer(function(player)
 		saturation = 1
 	}
 
+	player:set_formspec_prepend([[
+		bgcolor[#080808ff;true]
+	]])
+
 	player:get_inventory():set_width("main", 9)
 	player:get_inventory():set_size("main", 9*3)
 	player:get_inventory():set_size("craft", 0)
@@ -43,10 +47,3 @@ minetest.register_on_joinplayer(function(player)
 	player:get_inventory():set_size("craftresult", 0)
 	player:hud_set_hotbar_itemcount(9)
 end)
-
-minetest.register_on_player_hpchange(function(player, hp_change, reason)
-	if reason.type == 'fall' then
-		return 0
-	end
-	return hp_change
-end, true)

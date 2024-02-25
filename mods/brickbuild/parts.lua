@@ -139,7 +139,7 @@ for _, clr in pairs(colours) do
 		wield_image = "brickbuild_transparent.png^[multiply:#"..colour,
 		is_ground_content = true,
 		drawtype = "glasslike",
-		use_texture_alpha = true,
+		use_texture_alpha = "clip",
 		sunlight_propagates = true,
 		paramtype = "light",
 	})

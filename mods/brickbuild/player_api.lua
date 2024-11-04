@@ -12,7 +12,7 @@ local animations = {
 local player_anim = {}
 local player_sneak = {}
 
-minetest.register_on_joinplayer(function(player)
+core.register_on_joinplayer(function(player)
 	player:set_properties{
 		mesh = "character.b3d",
 		textures = {"character.png"},
@@ -39,8 +39,8 @@ minetest.register_on_joinplayer(function(player)
 	}
 end)
 
-minetest.register_globalstep(function()
-	for _, player in ipairs(minetest.get_connected_players()) do
+core.register_globalstep(function()
+	for _, player in ipairs(core.get_connected_players()) do
 		local name = player:get_player_name()
 		local controls = player:get_player_control()
 

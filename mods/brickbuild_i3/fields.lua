@@ -62,7 +62,7 @@ local function select_item(player, data, fields)
 				local i = 1
 
 				for _, v in ipairs(items) do
-					if valid_item(minetest.registered_items[clean_name(v)]) then
+					if valid_item(core.registered_items[clean_name(v)]) then
 						table.insert(data.alt_items, idx + i, v)
 						i = i + 1
 					end
@@ -76,10 +76,10 @@ local function select_item(player, data, fields)
 			item = string.match(item, "([%w:_]+)$")
 		end
 
-		item = minetest.registered_aliases[item] or item
-		if not minetest.registered_items[item] then return end
+		item = core.registered_aliases[item] or item
+		if not core.registered_items[item] then return end
 
-		if minetest.is_creative_enabled(data.player_name) then
+		if core.is_creative_enabled(data.player_name) then
 			local inv = player:get_inventory()
 			if not inv:contains_item("main", item) then
 				inv:add_item("main", item)
@@ -127,7 +127,7 @@ local function rcp_fields(player, data, fields)
 	end
 end
 
-minetest.register_on_player_receive_fields(function(player, formname, fields)
+core.register_on_player_receive_fields(function(player, formname, fields)
 	if formname ~= "" or fields.pagenum or fields.no_item then
 		return false
 	end

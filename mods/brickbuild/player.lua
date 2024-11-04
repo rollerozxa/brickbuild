@@ -1,5 +1,5 @@
 
-minetest.register_on_joinplayer(function(player)
+core.register_on_joinplayer(function(player)
 	player:set_sky{
 		base_color = "#777788",
 		type = 'skybox',

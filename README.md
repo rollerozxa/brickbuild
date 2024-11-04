@@ -1,2 +1,2 @@
 # Brickbuild
-A generic studded brick building game for Minetest.
+A generic studded brick building game for Luanti.

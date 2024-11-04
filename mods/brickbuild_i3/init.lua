@@ -12,7 +12,7 @@ i3 = {
 }
 
 local function include(path)
-	return dofile(minetest.get_modpath(minetest.get_current_modname()).."/"..path)
+	return dofile(core.get_modpath(core.get_current_modname()).."/"..path)
 end
 
 include("common.lua")
@@ -47,17 +47,17 @@ end
 
 local reset_data, valid_item = i3.get("reset_data", "valid_item")
 
-minetest.register_on_priv_grant(function(name, _, priv)
+core.register_on_priv_grant(function(name, _, priv)
 	if priv == "creative" or priv == "all" then
 		local data = i3.data[name]
 		reset_data(data)
 
-		local player = minetest.get_player_by_name(name)
-		minetest.after(0, i3.set_fs, player)
+		local player = core.get_player_by_name(name)
+		core.after(0, i3.set_fs, player)
 	end
 end)
 
-minetest.register_on_joinplayer(function(player)
+core.register_on_joinplayer(function(player)
 	local name = player:get_player_name()
 	i3.data[name] = i3.data[name] or {}
 	local data = i3.data[name]
@@ -65,7 +65,7 @@ minetest.register_on_joinplayer(function(player)
 	local _preselect = {}
 	local init_items = {}
 
-	for name, def in pairs(minetest.registered_items) do
+	for name, def in pairs(core.registered_items) do
 		if name ~= "" and valid_item(def) then
 			_preselect[name] = true
 		end
@@ -77,7 +77,7 @@ minetest.register_on_joinplayer(function(player)
 
 	table.sort(init_items)
 
-	local info = minetest.get_player_information(name)
+	local info = core.get_player_information(name)
 
 	data.player_name = name
 	data.filter      = ""
@@ -87,7 +87,7 @@ minetest.register_on_joinplayer(function(player)
 	data.itab        = 1
 	data.lang_code   = info and info.lang_code
 
-	minetest.after(0, i3.set_fs, player)
+	core.after(0, i3.set_fs, player)
 end)
 
 

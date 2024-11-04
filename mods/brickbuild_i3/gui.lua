@@ -48,7 +48,7 @@ local fs_elements = {
 
 local compression_active, compressible = i3.get("compression_active", "compressible")
 
-local trash = minetest.create_detached_inventory("i3_trash", {
+local trash = core.create_detached_inventory("i3_trash", {
 	allow_put = function(_, _, _, stack)
 		return stack:get_count()
 	end,
@@ -111,7 +111,7 @@ local function hide_items(player, data)
 		data.items = new
 	end
 
-	if not minetest.is_creative_enabled(data.player_name) then
+	if not core.is_creative_enabled(data.player_name) then
 		local new = {}
 
 		data.items = new
@@ -128,7 +128,7 @@ local function get_items_fs(fs, data, player, full_height)
 
 	fs(fmt("box[%f,0.2;6.05,0.6;#bababa25]", 0.3),
 	   "set_focus[filter]",
-	   fmt("field[%f,0.2;4.95,0.6;filter;;%s]", 0.35, minetest.formspec_escape(data.filter)),
+	   fmt("field[%f,0.2;4.95,0.6;filter;;%s]", 0.35, core.formspec_escape(data.filter)),
 	   "field_close_on_enter[filter;false]")
 
 	fs("image_button", 5.35, 0.35, 0.3,  0.3,  "", "cancel", "")
@@ -139,12 +139,12 @@ local function get_items_fs(fs, data, player, full_height)
 	data.pagemax = math.max(1, math.ceil(#items / ipp))
 
 	fs("button", 7.6, 0.14, 1.88, 0.7, "pagenum",
-		fmt("%s / %u", minetest.colorize("#ffd866", data.pagenum), data.pagemax))
+		fmt("%s / %u", core.colorize("#ffd866", data.pagenum), data.pagemax))
 
 	if #items == 0 then
 		local lbl = "No item to show"
 
-		if minetest.sha1(data.filter) == "7f7342b806f4d8dfb16e57ce289ee8cf72d5aa37" then
+		if core.sha1(data.filter) == "7f7342b806f4d8dfb16e57ce289ee8cf72d5aa37" then
 			lbl = "uwu"
 		end
 

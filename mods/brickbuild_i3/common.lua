@@ -1,12 +1,12 @@
 
-local old_is_creative_enabled = minetest.is_creative_enabled
+local old_is_creative_enabled = core.is_creative_enabled
 
-function minetest.is_creative_enabled(name)
+function core.is_creative_enabled(name)
 	if name == "" then
 		return old_is_creative_enabled(name)
 	end
 
-	return minetest.check_player_privs(name, {creative = true}) or old_is_creative_enabled(name)
+	return core.check_player_privs(name, {creative = true}) or old_is_creative_enabled(name)
 end
 
 local function search(data)
@@ -17,8 +17,8 @@ local function search(data)
 
 	for i = 1, #data.items_raw do
 		local item = data.items_raw[i]
-		local def = minetest.registered_items[item]
-		local desc = string.lower(minetest.get_translated_string(data.lang_code, def and def.description)) or ""
+		local def = core.registered_items[item]
+		local desc = string.lower(core.get_translated_string(data.lang_code, def and def.description)) or ""
 		local search_in = string.format("%s", desc)
 		local to_add
 
@@ -74,9 +74,9 @@ local function sort_by_category(data)
 		local to_add = true
 
 		if data.itab == 2 then
-			to_add = minetest.registered_nodes[item]
+			to_add = core.registered_nodes[item]
 		elseif data.itab == 3 then
-			to_add = minetest.registered_craftitems[item] or minetest.registered_tools[item]
+			to_add = core.registered_craftitems[item] or core.registered_tools[item]
 		end
 
 		if to_add then

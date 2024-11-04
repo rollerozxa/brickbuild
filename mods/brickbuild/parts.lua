@@ -23,7 +23,7 @@ end
 
 local function register_part(name, def)
 	def.groups = def.groups or { oddly_breakable_by_hand = 3 }
-	minetest.register_node(":brickbuild:"..name, def)
+	core.register_node(":brickbuild:"..name, def)
 
 	push_part_buffer(name)
 end
@@ -189,16 +189,16 @@ for _, clr in pairs(colours) do
 	]]
 end
 
-minetest.register_node('brickbuild:invisible_light', {
+core.register_node('brickbuild:invisible_light', {
 	description = 'Invisible Light\n'
-				..minetest.colorize("#ff8888", "Indestructible, to remove you need to place a part in the place of it."),
+				..core.colorize("#ff8888", "Indestructible, to remove you need to place a part in the place of it."),
 	inventory_image = "brickbuild_invisible_light.png",
 	wield_image = "brickbuild_invisible_light.png",
 	groups = { not_in_creative_inventory = 1 },
 	drawtype = "airlike",
 	sunlight_propagates = true,
 	paramtype = "light",
-	light_source = minetest.LIGHT_MAX,
+	light_source = core.LIGHT_MAX,
 	walkable = false,
 	pointable = false,
 	diggable = false,
@@ -206,7 +206,7 @@ minetest.register_node('brickbuild:invisible_light', {
 })
 
 for _,variant in ipairs{"a","b","c","d"} do
-	minetest.register_node('brickbuild:glass_'..variant, {
+	core.register_node('brickbuild:glass_'..variant, {
 		description = "Glass (Variant "..variant..")",
 		drawtype = "glasslike_framed_optional",
 		tiles = { "brickbuild_glass_frame.png", "brickbuild_glass_tint.png" },
